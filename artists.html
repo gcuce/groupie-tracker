@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sanatçılar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        li {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+            padding: 20px;
+            width: 300px;
+        }
+
+        img {
+            display: block;
+            margin: 0 auto 10px;
+            border-radius: 8px;
+        }
+
+        p {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul.members {
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sanatçılar</h1>
+    <ul>
+        {{range .}}
+        <li>
+            <h2>{{.Name}}</h2>
+            <img src="{{.Image}}" alt="{{.Name}}" width="200">
+            <p><strong>Yıl:</strong> {{.Year}}</p>
+            <p><strong>İlk Albüm:</strong> {{.FirstAlbum}}</p>
+            <p><strong>Üyeler:</strong></p>
+            <ul class="members">
+                {{range .Members}}
+                <li>{{.}}</li>
+                {{end}}
+            </ul>
+        </li>
+        {{end}}
+    </ul>
+</body>
+</html>
