@@ -42,7 +42,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// HTML şablon dosyasını parse et
-	t, err := template.ParseFiles("index.html")
+	t, err := template.ParseFiles("artists.html")
 	if err != nil {
 		http.Error(w, "HTML şablonu parse edilemedi", http.StatusInternalServerError)
 		return
