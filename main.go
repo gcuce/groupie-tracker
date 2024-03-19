@@ -5,20 +5,27 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"strings"
 )
 
 type Artist struct {
-	Name       string   `json:"name"`
-	Image      string   `json:"image"`
-	Year       int      `json:"creationDate"`
-	FirstAlbum string   `json:"firstAlbum"`
-	Members    []string `json:"members"`
+	Name         string   `json:"name"`
+	Image        string   `json:"image"`
+	Year         int      `json:"creationDate"`
+	FirstAlbum   string   `json:"firstAlbum"`
+	Members      []string `json:"members"`
+	Locations    string   `json:"locations"`
+	ConcertDates string   `json:"concertDates"`
+	Relations    string   `json:"relations"`
 }
 
 func main() {
-	// Web sunucusunu başlat
-	http.HandleFunc("/", handler)
+	// Statik dosyaları sunucuya tanımla
+	http.Handle("/templates/", http.StripPrefix("/templates/", http.FileServer(http.Dir("templates"))))
+
+	// HTTP Sunucusu başlat
 	log.Println("Web sunucusu başlatıldı. http://localhost:8080 adresine gidin.")
+	http.HandleFunc("/", handler)
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
@@ -40,9 +47,20 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "JSON verisi okunamadı", http.StatusInternalServerError)
 		return
 	}
+	// Arama terimini al
+	searchQuery := r.URL.Query().Get("search")
+	if searchQuery != "" {
+		filteredArtists := []Artist{}
+		for _, artist := range artists {
+			if strings.Contains(strings.ToLower(artist.Name), strings.ToLower(searchQuery)) {
+				filteredArtists = append(filteredArtists, artist)
+			}
+		}
+		artists = filteredArtists
+	}
 
 	// HTML şablon dosyasını parse et
-	t, err := template.ParseFiles("artists.html")
+	t, err := template.ParseFiles("templates/index.html")
 	if err != nil {
 		http.Error(w, "HTML şablonu parse edilemedi", http.StatusInternalServerError)
 		return

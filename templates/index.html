@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sanatçılar</title>
+    <link rel="stylesheet" href="/templates/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>SANATÇILAR</h1>
+        <div class="search-container">
+            <form action="/" method="get">
+                <input type="text" placeholder="Sanatçı Adı..." name="search">
+                <button type="submit">Ara</button>
+            </form>
+        </div>
+        <ul>
+            {{range .}}
+            <li>
+                <h2>{{.Name}}</h2>
+                <img src="{{.Image}}" alt="{{.Name}}" width="200">
+                <p><strong>Kurulduğu Yıl:</strong> {{.Year}}</p>
+                <p><strong>İlk Albüm:</strong> {{.FirstAlbum}}</p>
+                <p> <a href="#" class="location-link" data-locations="{{.Locations}}">Lokasyonlar</a></p>
+                <p> <a href="#" class="concert-dates-link" data-concert-dates="{{.ConcertDates}}">Konser Tarihleri</a></p>
+                <p> <a href="#" class="relations-link" data-relations="{{.Relations}}">İlişkiler</a></p>
+                <p class="toggle"><strong>Üyeleri Göster</strong></p>
+                <ul class="members">
+                    {{range .Members}}
+                    <li>{{.}}</li>
+                    {{end}}
+                </ul>
+            </li>
+            {{end}}
+        </ul>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2024 Sanatçılar Topluluğu. Tüm hakları saklıdır.</p>
+    </div>
+
+    <script>
+        // Açılır-kapanır bölümü kontrol etmek için JavaScript
+        const toggles = document.querySelectorAll('.toggle');
+        
+        toggles.forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                const members = this.nextElementSibling;
+                if (members.style.display === 'none') {
+                    members.style.display = 'block';
+                } else {
+                    members.style.display = 'none';
+                }
+            });
+        });
+
+        // Yeni özellikleri işle
+        const locationLinks = document.querySelectorAll('.location-link');
+        const concertDatesLinks = document.querySelectorAll('.concert-dates-link');
+        const relationsLinks = document.querySelectorAll('.relations-link');
+
+        locationLinks.forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const locations = this.dataset.locations;
+                window.open(locations, '_blank');
+            });
+        });
+
+        concertDatesLinks.forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const concertDates = this.dataset.concertDates;
+                window.open(concertDates, '_blank');
+            });
+        });
+
+        relationsLinks.forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const relations = this.dataset.relations;
+                window.open(relations, '_blank');
+            });
+        });
+    </script>
+</body>
+</html>
+
