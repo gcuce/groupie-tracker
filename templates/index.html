@@ -3,16 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sanatçılar</title>
+    <title>Groupie-Tracker</title>
     <link rel="stylesheet" href="/templates/style.css">
+    <!-- Logo için link ekle -->
+    <link rel="icon" href="/templates/logo.png" type="image/png">
+    <!-- Yönlendirme için link ekle -->
+    <link rel="shortcut icon" type="image/x-icon" href="http://localhost:8080/">
 </head>
 <body>
     <div class="container">
         <h1>SANATÇILAR</h1>
         <div class="search-container">
             <form action="/" method="get">
-                <input type="text" placeholder="Sanatçı Adı..." name="search">
-                <button type="submit">Ara</button>
+                <input type="text" placeholder="Sanatçı Ara..." name="search" aria-label="Sanatçı Ara">
+                <button type="submit" class="search-button">Ara</button>
             </form>
         </div>
         <ul>
@@ -86,4 +90,3 @@
     </script>
 </body>
 </html>
-

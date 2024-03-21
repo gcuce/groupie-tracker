@@ -40,7 +40,7 @@ p {
 }
 
 ul.members {
-    padding-left: px;
+    padding-left: 0;
     display: none;
 }
 
@@ -82,4 +82,31 @@ ul.members {
     color: white;
 }
 
+.search-container {
+    text-align: right;
+    margin-bottom: 10px; /* Alt boşluğu azalt */
+    margin-right: 30px;
+}
 
+input[type="text"] {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 70%;
+    max-width: 300px;
+}
+
+.search-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-button:hover {
+    background-color: #1c5b1f; /* Hover rengini güncelle */
+}
