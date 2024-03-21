@@ -5,6 +5,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"strconv"
 	"strings"
 )
 
@@ -52,10 +53,22 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	if searchQuery != "" {
 		filteredArtists := []Artist{}
 		for _, artist := range artists {
-			if strings.Contains(strings.ToLower(artist.Name), strings.ToLower(searchQuery)) {
+			memberMatch := false
+			for _, member := range artist.Members {
+				if strings.Contains(strings.ToLower(member), strings.ToLower(searchQuery)) {
+					memberMatch = true
+					break
+				}
+			}
+			if memberMatch || strings.Contains(strings.ToLower(artist.Name), strings.ToLower(searchQuery)) {
+				filteredArtists = append(filteredArtists, artist)
+			} else if strconv.Itoa(artist.Year) == searchQuery {
+				filteredArtists = append(filteredArtists, artist)
+			} else if artist.FirstAlbum == searchQuery {
 				filteredArtists = append(filteredArtists, artist)
 			}
 		}
+
 		artists = filteredArtists
 	}
 
@@ -71,4 +84,5 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "HTML şablonu işlenemedi", http.StatusInternalServerError)
 		return
 	}
+
 }
