@@ -2,68 +2,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #29412e;
-}
-
-h1 {
-    text-align: center;
-    margin-top: 20px;
-}
-
-ul {
-    list-style-type: none;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-li {
-    background-color: #8aac92;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin: 10px;
-    padding: 20px;
-    width: 300px;
-    text-align: left;
-}
-
-img {
-    display: block;
-    margin: 0 auto 10px;
-    border-radius: 5px;
-}
-
-p {
-    margin: 0;
-    padding: 5px;
-}
-
-ul.members {
-    padding-left: 0;
-    display: none;
-}
-
-.toggle {
-    cursor: pointer;
-    color: rgb(0, 0, 0);
-    font-weight: bold;
-    font-size: 18px;
-    text-decoration: underline;
-}
-
-.members {
-    padding: 0;
-    display: none;
-    background-color: #29412e;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    color: #ffffff;
-    padding: 5px;
-}
-
-.members li {
-    width: calc(100% - 60px);
+    background-color: #293141;
 }
 
 .container {
@@ -73,18 +12,56 @@ ul.members {
     max-width: 1480px;
     border-radius: 10px;
     background-color: #fff;
+    text-align: center; 
 }
 
-.footer {
-    text-align: center;
-    padding: 20px;
-    background-color: #18251b;
-    color: white;
+.logo {
+    display: inline-block;
+    vertical-align: middle;
+    width: 120px;
+    height: auto;
+    border-radius: 5px;
+    margin-right: 470px; 
 }
+
+.heading {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 600px;
+    font-size: 32px; /* Daha büyük font boyutu */
+    font-weight: bold; /* Kalın font ağırlığı */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Gölge efekti */
+    text-align: center; /* Başlığı ortala */
+    padding: 10px; /* Çerçeve içeri boşluğu */
+    border: 2px solid #000; /* Siyah renkte çerçeve */
+    border-radius: 8px; /* Köşeleri yuvarlat */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Geçiş efekti için box-shadow eklendi */
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3); /* Gölge efekti */
+    position: relative; /* Mutlak pozisyonlanma için */
+}
+
+.heading:hover {
+    transform: scale(1.1); /* Başlık üzerine gelindiğinde büyüme efekti */
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5); /* Başlık üzerine gelindiğinde gölge efekti */
+}
+
+.heading::after {
+    content: ''; /* Ek içerik */
+    position: absolute; /* Mutlak pozisyonlanma */
+    left: 0; /* Soldan başlaması */
+    bottom: -10px; /* Başlığın altında 10 piksel mesafede */
+    width: 100%; /* Sayfa genişliği boyunca uzanan çizgi */
+    height: 2px; /* Çizginin kalınlığı */
+    background-color: #000; /* Renk */
+}
+
+
+
+
 
 .search-container {
     text-align: right;
-    margin-bottom: 10px; /* Alt boşluğu azalt */
+    margin-bottom: 10px; 
     margin-right: 30px;
 }
 
@@ -108,5 +85,83 @@ input[type="text"] {
 }
 
 .search-button:hover {
-    background-color: #1c5b1f; /* Hover rengini güncelle */
+    background-color: #1c5b1f; 
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+li {
+    background-color: #7e99cd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    padding: 20px;
+    width: 300px;
+    text-align: left;
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Animasyon efektleri eklendi */
+}
+
+li:hover {
+    background-color: #6c85ad; /* Hover durumunda arka plan rengini değiştir */
+    transform: scale(1.1); /* Hover durumunda büyüme efekti eklendi */
+}
+
+
+img {
+    display: block;
+    margin: 0 auto 10px;
+    border-radius: 5px;
+}
+
+p {
+    margin: 0;
+    padding: 5px;
+}
+
+ul.members {
+    padding-left: 0;
+    display: none;
+}
+
+.toggle {
+    cursor: pointer;
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    font-size: 17px;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.toggle:hover {
+    color: #000000; /* Hover durumunda yazı rengini değiştir */
+    text-decoration: underline; /* Hover durumunda yazının altını çiz */
+}
+
+
+.members {
+    padding: 0;
+    display: none;
+    background-color: #293141;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    color: #ffffff;
+    padding: 5px;
+    transition: max-height 0.5s ease;
+}
+
+.members li {
+    width: calc(100% - 60px);
+}
+
+.footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #8c9fc3;
+    color: white;
 }

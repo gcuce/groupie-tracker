@@ -1,35 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Groupie-Tracker</title>
     <link rel="stylesheet" href="/templates/style.css">
-    <!-- Logo için link ekle -->
-    <link rel="icon" href="/templates/logo.png" type="image/png">
-    <!-- Yönlendirme için link ekle -->
-    <link rel="shortcut icon" type="image/x-icon" href="http://localhost:8080/">
+    <link rel="icon" href="/templates/logoGT.png" type="image/png">
 </head>
+
 <body>
     <div class="container">
-        <h1>SANATÇILAR</h1>
+        <a href="http://localhost:8080/"><img src="/templates/logoGT.png" alt="Logo" class="logo"></a>
+        <h1 class="heading">SANATÇILAR</h1>
         <div class="search-container">
             <form action="/" method="get">
                 <input type="text" placeholder="Sanatçı Ara..." name="search" aria-label="Sanatçı Ara">
                 <button type="submit" class="search-button">Ara</button>
             </form>
         </div>
+        <div class="date-filter">
+
+            <form action="/" method="get">
+                <label for="start_date">Oluşturma Tarihi Başlangıcı:</label>
+                <input type="number" id="start_date" name="start_date" placeholder="Başlangıç Yılı" min="1900"
+                    max="2100">
+                <label for="end_date">Oluşturma Tarihi Bitişi:</label>
+                <input type="number" id="end_date" name="end_date" placeholder="Bitiş Yılı" min="1900" max="2100">
+                <label for="minDate">Min Tarih:</label>
+                <input type="date" id="minDate" name="min_first_album_date">
+                <label for="maxDate">Max Tarih:</label>
+                <input type="date" id="maxDate" name="max_first_album_date">
+                <input type="checkbox" id="one-member" name="members" value="1">
+                <label for="one-member">1 Üye</label><br>
+                <input type="checkbox" id="two-members" name="members" value="2">
+                <label for="two-members">2 Üye</label><br>
+                <input type="checkbox" id="three-members" name="members" value="3">
+                <label for="three-members">3 Üye</label><br>
+                <input type="checkbox" id="four-member" name="members" value="4">
+                <label for="four-member">4 Üye</label><br>
+                <input type="checkbox" id="five-members" name="members" value="5">
+                <label for="five-members">5 Üye</label><br>
+                <input type="checkbox" id="six-members" name="members" value="6">
+                <label for="six-members">6 Üye</label><br>
+                <input type="checkbox" id="seven-members" name="members" value="7">
+                <label for="seven-members">7 Üye</label><br>
+                <label for="country">Ülke:</label>
+                <select id="country" name="country" onchange="updateStates()">
+                    <option value="">Ülke Seçiniz</option>
+                </select>
+                <label for="state">Eyalet/Şehir:</label>
+                <select id="state" name="state">
+                    <option value="">Eyalet/Şehir Seçiniz</option>
+                </select>
+                <button type="submit" class="filter-button">Filtrele</button>
+            </form>
+        </div>
+
         <ul>
             {{range .}}
             <li>
                 <h2>{{.Name}}</h2>
                 <img src="{{.Image}}" alt="{{.Name}}" width="200">
-                <p><strong>Kurulduğu Yıl:</strong> {{.Year}}</p>
-                <p><strong>İlk Albüm:</strong> {{.FirstAlbum}}</p>
-                <p> <a href="#" class="location-link" data-locations="{{.Locations}}">Lokasyonlar</a></p>
-                <p> <a href="#" class="concert-dates-link" data-concert-dates="{{.ConcertDates}}">Konser Tarihleri</a></p>
-                <p> <a href="#" class="relations-link" data-relations="{{.Relations}}">İlişkiler</a></p>
-                <p class="toggle"><strong>Üyeleri Göster</strong></p>
+                <p><strong>Cretion:</strong> {{.Year}}</p>
+                <p><strong>First Album:</strong> {{.FirstAlbum}}</p>
+                <p class="toggle">Locations</p>
+                <ul class="members">
+                    {{range .Locations}}
+                    <li>{{.}}</li>
+                    {{end}}
+                </ul>
+                <p class="toggle">Dates</p>
+                <ul class="members">
+                    {{range .Dates}}
+                    <li> {{.Format "02 January 2006"}}, </li>
+                    {{end}}
+                </ul>
+                <p class="toggle">Relation</p>
+                <ul class="members">
+                    {{range .Relations}}
+                    <li>{{.}}</li>
+                    {{end}}
+                </ul>
+                <p class="toggle">Members</p>
                 <ul class="members">
                     {{range .Members}}
                     <li>{{.}}</li>
@@ -45,11 +98,42 @@
     </div>
 
     <script>
+         var countries = {
+            "USA": ["Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"],
+            "Turkey": ["Istanbul", "Ankara", "Izmir", "Bursa", "Adana", "Gaziantep", "Konya", "Antalya", "Mersin", "Diyarbakır", "Kayseri", "Eskişehir", "Şanlıurfa", "Samsun", "Malatya", "Denizli", "Kahramanmaraş", "Erzurum", "Van", "Batman", "Elazığ", "Isparta", "Balıkesir", "Kütahya", "Trabzon", "Çorum", "Ordu", "Antakya", "Aydın", "Tekirdağ", "Mardin", "Şırnak", "Kırklareli", "Çanakkale", "Yalova", "Ağrı", "Osmaniye", "Kars", "Artvin", "Afyonkarahisar", "Rize", "Edirne", "Nevşehir", "Sinop", "Çankırı", "Karaman"]
+        };
+
+        var countryDropdown = document.getElementById("country");
+        var stateDropdown = document.getElementById("state");
+
+        // Ülke seçeneklerini doldur
+        for (var country in countries) {
+            var option = document.createElement("option");
+            option.value = country;
+            option.text = country;
+            countryDropdown.appendChild(option);
+        }
+
+        // Eyalet/Şehir seçeneklerini güncelle
+        function updateStates() {
+            var selectedCountry = countryDropdown.value;
+            stateDropdown.innerHTML = ""; // Eyalet/Şehir seçeneklerini temizle
+
+            if (selectedCountry !== "") {
+                var states = countries[selectedCountry];
+                states.forEach(function (state) {
+                    var option = document.createElement("option");
+                    option.value = state;
+                    option.text = state;
+                    stateDropdown.appendChild(option);
+                });
+            }
+        }
         // Açılır-kapanır bölümü kontrol etmek için JavaScript
         const toggles = document.querySelectorAll('.toggle');
-        
+
         toggles.forEach(toggle => {
-            toggle.addEventListener('click', function() {
+            toggle.addEventListener('click', function () {
                 const members = this.nextElementSibling;
                 if (members.style.display === 'none') {
                     members.style.display = 'block';
@@ -58,35 +142,7 @@
                 }
             });
         });
-
-        // Yeni özellikleri işle
-        const locationLinks = document.querySelectorAll('.location-link');
-        const concertDatesLinks = document.querySelectorAll('.concert-dates-link');
-        const relationsLinks = document.querySelectorAll('.relations-link');
-
-        locationLinks.forEach(link => {
-            link.addEventListener('click', function (e) {
-                e.preventDefault();
-                const locations = this.dataset.locations;
-                window.open(locations, '_blank');
-            });
-        });
-
-        concertDatesLinks.forEach(link => {
-            link.addEventListener('click', function (e) {
-                e.preventDefault();
-                const concertDates = this.dataset.concertDates;
-                window.open(concertDates, '_blank');
-            });
-        });
-
-        relationsLinks.forEach(link => {
-            link.addEventListener('click', function (e) {
-                e.preventDefault();
-                const relations = this.dataset.relations;
-                window.open(relations, '_blank');
-            });
-        });
     </script>
 </body>
+
 </html>
